@@ -49,7 +49,7 @@ Fixing only layer 1 did not change the answer; both layers were needed.
 |---|---|
 | Severity / Priority | High / P1 |
 | Component | RAG knowledge base (`rag_agent.py`, `POLICY_DOCS`) vs MCP server (`mcp_server.py`) and `policies.txt` |
-| Found by | Reading the data sources, then confirmed with DeepEval (`evals/06_rag.py`) |
+| Found by | Reading the data sources, then confirmed with DeepEval (`evals/06_rag.py`, `evals/07_mcp_tool_use.py`) |
 | Status | **Open** |
 
 **Steps to reproduce**
@@ -69,6 +69,8 @@ Fixing only layer 1 did not change the answer; both layers were needed.
 | Faithfulness | 1.00 | Pass (answer matches the retrieved document, which is itself wrong) |
 | Answer Relevancy | 1.00 | Pass |
 | **G-Eval Correctness** (vs expected answer) | **0.68** | **Fail** (threshold 0.70): *"inaccurately lists the cost as $15 instead of $12.99... a critical pricing error"* |
+
+**Same question, two agents, two prices:** asked about shipping, the support agent (through the MCP tool) answers **$12.99** (`evals/07_mcp_tool_use.py`, Correctness 1.00), while the RAG agent answers **$15**.
 
 **Root cause:** the knowledge-base document is out of date or was written separately from the policy file and the MCP tool. The agent behaves correctly; the **data** is wrong.
 

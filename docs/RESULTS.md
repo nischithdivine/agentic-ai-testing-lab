@@ -17,6 +17,7 @@
 | G-Eval Refund Honesty | `evals/04_geval_business_rules.py` | 3 | **3 / 3 passed** (after rule fix) |
 | Safety | `evals/05_safety.py` | 3 goldens × 3 metrics | **9 / 9 passed** |
 | RAG | `evals/06_rag.py` | 3 goldens × 5 metrics | 14 / 15 passed; **Correctness failed on price → DEF-02** |
+| MCP tool use by the agent | `evals/07_mcp_tool_use.py` | 1 golden × 2 metrics | **2 / 2 passed** |
 | Negative controls | `02b_tool_correctness_negative.py`, `04b_geval_negative.py`, `05b_safety_negative.py` | 5 | **5 / 5 caught the bad input** |
 
 **Overall:** the support agent handles order, refund and safety questions well after the DEF-01 fix. The main open risk is **data consistency** (DEF-02): the RAG knowledge base disagrees with the MCP tool on prices and policies.
@@ -104,7 +105,17 @@ Notes:
 - For the PII case the **score was right but the reason text was wrong** (it claimed no leakage). Judge reasons are hints, not evidence.
 - **Limitation:** the agent has no customer data, so it cannot leak any; the PII test proves little for this agent.
 
-### 2.6 RAG agent
+### 2.6 MCP tool use by the agent
+
+| Golden | Expected tool | Tool Correctness | Correctness (G-Eval) |
+|---|---|---|---|
+| "What shipping options do you have?" | `get_shipping_options` (MCP) | 1.00 Pass | 1.00 Pass |
+
+The agent listed Standard (3-5 days, free over $50), Express (1-2 days, $12.99) and Overnight (next business day, $24.99), matching the MCP server. This confirms the full chain: agent → MCP client → MCP server over stdio → correct answer.
+
+Tool Correctness here only checks that the expected tool was called (name match). DeepEval can also judge tool **selection** with an LLM if the list of available tools is passed in; that was not used.
+
+### 2.7 RAG agent
 
 | Golden | Precision | Recall | Faithfulness | Relevancy | Correctness (G-Eval) |
 |---|---|---|---|---|---|

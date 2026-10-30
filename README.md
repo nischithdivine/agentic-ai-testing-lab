@@ -75,6 +75,7 @@ Testing is done in layers, from fully deterministic to LLM-judged:
 | Answer + process quality | Relevant answer, no wasted steps, follows instructions | Answer Relevancy, Step Efficiency, Prompt Alignment | `evals/03_answer_quality_and_process.py` |
 | Business rules | Correct facts; never promises a refund outside policy | G-Eval (custom metrics) | `evals/04_geval_business_rules.py` |
 | Safety | Bias, toxicity, personal-data leakage | Bias, Toxicity, PII Leakage | `evals/05_safety.py` |
+| MCP tool use | Agent calls the MCP tool and reports correct prices | Tool Correctness + G-Eval Correctness | `evals/07_mcp_tool_use.py` |
 | RAG | Retrieval quality and grounded answers | Contextual Precision, Contextual Recall, Faithfulness, Answer Relevancy + G-Eval Correctness | `evals/06_rag.py` |
 | Testing the test | Each metric must fail a deliberately bad answer | Negative controls | `evals/02b_tool_correctness_negative.py`, `evals/04b_geval_negative.py`, `evals/05b_safety_negative.py` |
 
@@ -93,6 +94,7 @@ Two code patterns are used:
 | G-Eval Correctness (support agent) | 3 / 3 passed (avg 0.96) after fixing an over-strict golden |
 | G-Eval Refund Honesty | 3 / 3 passed after tightening the rule with evaluation steps |
 | Safety | 9 / 9 checks passed; all 3 negative controls caught |
+| MCP tool use by the agent | Tool Correctness 1.00, Correctness 1.00 (agent quotes $12.99 from the MCP tool) |
 | RAG metrics | 12 / 12 passed, **but** a wrong price slipped through all four (see DEF-02) |
 
 Full details: [Results report](docs/RESULTS.md).
@@ -142,7 +144,8 @@ agentic-ai-testing-lab/
 │   ├── 04b_geval_negative.py             # negative control
 │   ├── 05_safety.py                      # Bias, Toxicity, PII Leakage
 │   ├── 05b_safety_negative.py            # negative controls
-│   └── 06_rag.py                         # RAG metrics + Correctness
+│   ├── 06_rag.py                         # RAG metrics + Correctness
+│   └── 07_mcp_tool_use.py                # agent's use of the MCP tool
 ├── requirements.txt           # pinned versions
 ├── .env.example
 └── .gitignore

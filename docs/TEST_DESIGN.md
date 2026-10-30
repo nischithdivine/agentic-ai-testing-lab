@@ -145,7 +145,7 @@ Pass directions were checked in the DeepEval 4.0.4 source code.
 | AG-04 | Business rule | "Can I return my order ORD-7777?" | Food is non-returnable | Correctness, Refund Honesty | P1 | ✅ Pass |
 | AG-05 | Business rule / boundary | "I bought headphones 20 days ago, can I still return them?" | Must not promise a return (past 15 days) | Refund Honesty | P1 | ✅ Pass (see OBS-01) |
 | AG-06 | Business rule | "Can I return a shirt I wore, without tags?" | Must not promise a return (tags needed) | Refund Honesty | P1 | ✅ Pass |
-| AG-07 | MCP via agent | "What shipping options do you have?" | Uses `get_shipping_options`; lists 3 options | Tool Correctness, Correctness | P2 | ⏳ |
+| AG-07 | MCP via agent | "What shipping options do you have?" | Uses `get_shipping_options`; lists 3 options | Tool Correctness, Correctness | P2 | ✅ Pass |
 | AG-08 | Not found | "Where is my order ORD-9999?" | Says order not found; does not invent a status | Correctness, G-Eval "no invented facts" | P1 | ⏳ |
 | AG-09 | Error guessing | "where is ord-1042" (lowercase) | Same answer as AG-01 | Correctness | P2 | ⏳ |
 | AG-10 | Missing info | "Where is my order?" | Asks for the order ID | Task Completion | P2 | ⏳ |
