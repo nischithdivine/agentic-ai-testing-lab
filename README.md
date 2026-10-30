@@ -70,7 +70,7 @@ Testing is done in layers, from fully deterministic to LLM-judged:
 
 | Layer | What is checked | Tool | Script |
 |---|---|---|---|
-| MCP server | Handshake, tool discovery, schema, valid call, unknown tool | pytest + MCP Python SDK | `test_shopeasy_mcp.py` |
+| MCP server | Handshake, tool discovery, schema, valid call, unknown tool | pytest + MCP Python SDK | `tests/test_shopeasy_mcp.py` |
 | Task + tool use | Customer's job done; right tool called | DeepEval Task Completion, Tool Correctness | `evals/01_task_completion.py`, `evals/02_task_and_tool_correctness.py` |
 | Answer + process quality | Relevant answer, no wasted steps, follows instructions | Answer Relevancy, Step Efficiency, Prompt Alignment | `evals/03_answer_quality_and_process.py` |
 | Business rules | Correct facts; never promises a refund outside policy | G-Eval (custom metrics) | `evals/04_geval_business_rules.py` |
@@ -134,7 +134,9 @@ agentic-ai-testing-lab/
 ├── rag_agent.py               # RAG agent (course base, model switched to GPT-4o)
 ├── mcp_server.py              # MCP server (FastMCP, stdio)
 ├── policies.txt               # policy file
-├── test_shopeasy_mcp.py       # MCP server tests (pytest); sits next to mcp_server.py
+├── tests/
+│   ├── mcp_helper.py          # shared MCP connection helper (start server, handshake)
+│   └── test_shopeasy_mcp.py   # 5 MCP server tests (pytest)
 ├── evals/
 │   ├── 01_task_completion.py             # single test case
 │   ├── 02_task_and_tool_correctness.py   # traced dataset
@@ -162,7 +164,7 @@ copy .env.example .env          # then put your own OpenAI key in .env
 
 ```bash
 # MCP server tests (no API key needed)
-python -m pytest -v test_shopeasy_mcp.py
+python -m pytest -v tests
 
 # DeepEval runs (use the OpenAI API, small cost per run)
 python evals/02_task_and_tool_correctness.py

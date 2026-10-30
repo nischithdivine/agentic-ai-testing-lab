@@ -1,37 +1,13 @@
-"""Five high-impact MCP integration tests for the ShopEasy mcp_server.py.
+"""Five MCP integration tests for the ShopEasy mcp_server.py.
 
-Run from the folder containing mcp_server.py:
-    python -m pytest -v test_shopeasy_mcp.py
+Run from the project root:
+    python -m pytest -v tests
 
-These tests start the actual server as a local child process over stdio.
+The connection work is in mcp_helper.py; each test here only holds its own check.
 No OpenAI API key is required.
 """
 
-import asyncio
-import sys
-from pathlib import Path
-
-from mcp import ClientSession, StdioServerParameters
-from mcp.client.stdio import stdio_client
-
-SERVER_FILE = Path(__file__).resolve().with_name("mcp_server.py")
-
-
-def run_mcp_test(check):
-    """Open an MCP connection, initialize it, then run a test check."""
-
-    async def runner():
-        assert SERVER_FILE.exists(), f"Missing MCP server: {SERVER_FILE}"
-        params = StdioServerParameters(
-            command=sys.executable,
-            args=[str(SERVER_FILE)],
-        )
-        async with stdio_client(params) as (read, write):
-            async with ClientSession(read, write) as session:
-                initialization = await session.initialize()
-                await check(session, initialization)
-
-    asyncio.run(runner())
+from mcp_helper import run_mcp_test
 
 
 def test_tc01_connection():

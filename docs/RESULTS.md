@@ -9,7 +9,7 @@
 
 | Area | Script | Tests | Result |
 |---|---|---|---|
-| MCP server | `test_shopeasy_mcp.py` | 5 | **5 passed** |
+| MCP server | `tests/test_shopeasy_mcp.py` | 5 | **5 passed** |
 | Task Completion (single case) | `evals/01_task_completion.py` | 1 | Passed |
 | Task Completion + Tool Correctness | `evals/02_task_and_tool_correctness.py` | 2 goldens × 2 metrics | **4 / 4 passed** |
 | Answer Relevancy, Step Efficiency, Prompt Alignment | `evals/03_answer_quality_and_process.py` | 3 goldens × 3 metrics | Failures on ORD-2099 → **DEF-01** |

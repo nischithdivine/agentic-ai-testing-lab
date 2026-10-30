@@ -123,7 +123,7 @@ Pass directions were checked in the DeepEval 4.0.4 source code.
 
 ## 9. Test cases
 
-### 9.1 MCP server (pytest, `test_shopeasy_mcp.py`)
+### 9.1 MCP server (pytest, `tests/test_shopeasy_mcp.py`)
 
 | ID | Test | Expected | Status |
 |---|---|---|---|
